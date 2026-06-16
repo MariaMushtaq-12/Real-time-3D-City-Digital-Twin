@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salzburg 3D City Digital Twin — MapLibre GL JS</title>
+  <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══ TOP BAR ══ -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="tb-logo">
+        <div class="tb-cube">▣</div>
+        <div>
+          <div class="tb-title">Salzburg 3D Digital Twin</div>
+          <div class="tb-sub">Urban Intelligence Platform · MapLibre GL JS</div>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-center">
+      <div class="stat-pill" id="pilBuildings"><span class="sp-num" id="numBuildings">—</span><span class="sp-lbl">Buildings Rendered</span></div>
+      <div class="stat-pill" id="pilFPS"><span class="sp-num" id="numFPS">60</span><span class="sp-lbl">FPS (WebGL)</span></div>
+      <div class="stat-pill"><span class="sp-num">3D</span><span class="sp-lbl">GPU Extrusion</span></div>
+    </div>
+    <div class="topbar-right">
+      <span class="live-badge">● LIVE</span>
+      <span class="coord-display" id="coordDisplay">47.8°N 13.0°E</span>
+    </div>
+  </header>
+
+  <!-- ══ MAP ══ -->
+  <div id="map"></div>
+
+  <!-- ══ LEFT PANEL ══ -->
+  <aside class="left-panel">
+
+    <!-- View Modes -->
+    <div class="lp-section">
+      <div class="lp-title">View Mode</div>
+      <div class="view-modes">
+        <button class="vm-btn active" data-mode="type">By Use Type</button>
+        <button class="vm-btn" data-mode="height">By Height</button>
+        <button class="vm-btn" data-mode="mono">Monochrome</button>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="lp-section" id="legendType">
+      <div class="lp-title">Building Use Type</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#4A90D9"></span>Residential</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#E8A838"></span>Commercial</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#D9534F"></span>Industrial</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#5CB85C"></span>Government / Public</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#9B59B6"></span>Education</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#1ABC9C"></span>Healthcare</div>
+      <div class="leg-row"><span class="leg-dot" style="background:#95A5A6"></span>Other / Unknown</div>
+    </div>
+
+    <div class="lp-section hidden" id="legendHeight">
+      <div class="lp-title">Building Height</div>
+      <div class="height-gradient"></div>
+      <div class="height-labels">
+        <span>0 m</span><span>50 m</span><span>100 m+</span>
+      </div>
+    </div>
+
+    <!-- Filter by Type -->
+    <div class="lp-section">
+      <div class="lp-title">Filter by Use Type</div>
+      <div class="filter-chips" id="typeFilters">
+        <button class="chip active" data-type="all">All</button>
+        <button class="chip" data-type="residential">Residential</button>
+        <button class="chip" data-type="commercial">Commercial</button>
+        <button class="chip" data-type="industrial">Industrial</button>
+        <button class="chip" data-type="public">Government</button>
+        <button class="chip" data-type="school">Education</button>
+        <button class="chip" data-type="hospital">Healthcare</button>
+      </div>
+    </div>
+
+    <!-- Camera Controls -->
+    <div class="lp-section">
+      <div class="lp-title">Camera Controls</div>
+      <div class="slider-row">
+        <label>Pitch <span id="pitchVal">52°</span></label>
+        <input type="range" id="pitchSlider" min="0" max="85" value="52"  placeholder="pitch"/>
+      </div>
+      <div class="slider-row">
+        <label>Bearing <span id="bearingVal">-17°</span></label>
+        <input type="range" id="bearingSlider" min="-180" max="180" value="-17"  placeholder="bearing"/>
+      </div>
+      <div class="fly-btns">
+        <button class="fly-btn" data-zone="fortress">🏰 Fortress</button>
+        <button class="fly-btn" data-zone="oldtown">🏛 Old Town</button>
+        <button class="fly-btn" data-zone="university">🎓 University</button>
+        <button class="fly-btn" data-zone="overview">🌍 Overview</button>
+      </div>
+    </div>
+
+    <!-- Atmosphere -->
+    <div class="lp-section">
+      <div class="lp-title">Atmosphere</div>
+      <div class="atm-group">
+        <button class="atm-btn active" data-sky="day">☀ Day</button>
+        <button class="atm-btn" data-sky="dusk">🌆 Dusk</button>
+        <button class="atm-btn" data-sky="night">🌃 Night</button>
+      </div>
+    </div>
+
+    <div class="lp-footer">
+      Maria Mushtaq · MSc Digital Earth<br/>
+      Univ. of Salzburg · MapLibre GL JS
+    </div>
+  </aside>
+
+  <!-- ══ BUILDING INSPECTOR (right, appears on click) ══ -->
+  <div class="inspector hidden" id="inspector">
+    <div class="insp-header">
+      <div class="insp-title" id="inspName">Building</div>
+      <button class="insp-close" id="inspClose">✕</button>
+    </div>
+    <div class="insp-badge-row">
+      <span class="insp-badge" id="inspBadge">Residential</span>
+    </div>
+    <div class="insp-rows" id="inspRows"></div>
+    <div class="insp-bar-wrap">
+      <div class="insp-bar-label">Height vs Max (150m)</div>
+      <div class="insp-bar-bg"><div class="insp-bar-fill" id="inspBarFill"></div></div>
+    </div>
+    <div class="insp-why">
+      <div class="insp-why-title">Why MapLibre for this?</div>
+      <div class="insp-why-text" id="inspWhyText"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
