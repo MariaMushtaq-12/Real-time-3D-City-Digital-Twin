@@ -100,36 +100,6 @@ function addBuildingLayers() {
   // ── 3D BUILDING EXTRUSION ────────────────────────────────
   if (!map.getLayer("3d-buildings")) {
     map.addLayer(
-    //   {
-    //   id:           "3d-buildings",
-    //   source:       "ofm-tiles",
-    //   "source-layer": "building",
-    //   type:         "fill-extrusion",
-    //   minzoom:      13,
-    //   filter: ["!=", ["get", "hide_3d"], true],
-    //   paint: {
-
-    //     // Color by building use type (data-driven expression)
-    //     "fill-extrusion-color": getBuildingColorExpression("type"),
-
-    //     // Height from OSM render_height attribute
-    //     "fill-extrusion-height": [
-    //       "interpolate", ["linear"], ["zoom"],
-    //       13, 0,
-    //       15, ["coalesce", ["get", "render_height"], 6]
-    //     ],
-
-    //     // Base height for buildings above ground level
-    //     "fill-extrusion-base": [
-    //       "case",
-    //       [">=", ["zoom"], 15],
-    //       ["coalesce", ["get", "render_min_height"], 0],
-    //       0
-    //     ],
-
-    //     "fill-extrusion-opacity": 0.88
-    //   }
-    // },
     {
             'id': '3d-buildings',
             'source': 'ofm-tiles',
@@ -137,26 +107,7 @@ function addBuildingLayers() {
             'type': 'fill-extrusion',
             'minzoom': 15,
             'filter': ['!=', ['get', 'hide_3d'], true],
-            // 'paint': {
-            //     'fill-extrusion-color': [
-            //         'interpolate',
-            //         ['linear'],
-            //         ['get', 'render_height'], 0, 'lightgray', 200, 'royalblue', 400, 'lightblue'
-            //     ],
-            //     'fill-extrusion-height': [
-            //         'interpolate',
-            //         ['linear'],
-            //         ['zoom'],
-            //         15,
-            //         0,
-            //         16,
-            //         ['get', 'render_height']
-            //     ],
-            //     'fill-extrusion-base': ['case',
-            //         ['>=', ['get', 'zoom'], 16],
-            //         ['get', 'render_min_height'], 0
-            //     ]
-            // }
+        
 
              paint: {
   "fill-extrusion-color": getBuildingColorExpression("type"),
@@ -198,6 +149,8 @@ function addBuildingLayers() {
 
 // ── DATA-DRIVEN COLOR EXPRESSIONS ────────────────────────────
 function getBuildingColorExpression(mode) {
+  console.log("Generating building color expression for mode:", mode);
+
   if (mode === "height") {
     return [
       "interpolate", ["linear"],
@@ -230,7 +183,7 @@ function getBuildingColorExpression(mode) {
     ["government", "civic", "public", "town_hall", "post_office"],               "#5CB85C",
     ["school", "university", "college", "kindergarten", "library"],              "#9B59B6",
     ["hospital", "clinic", "pharmacy", "healthcare"],                            "#1ABC9C",
-    "#95A5A6"  // fallback
+    "#a69595"  // fallback
   ];
 }
 
@@ -380,18 +333,23 @@ document.querySelectorAll(".atm-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".atm-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
+    console.log("Sky preset:", btn.dataset.sky);
     currentSky = btn.dataset.sky;
     applyAtmosphere(currentSky);
   });
 });
 
 function applyAtmosphere(sky) {
-  if (!map.getLayer("3d-buildings")) return;
+ 
+  currentSky = sky;
+  // console.log("Previous sky:", previousSky);
+  // console.log("Applying atmosphere preset:", currentSky);
+  // if (!map.getLayer("3d-buildings")) return;
   const preset = skyPresets[sky];
 
   // Swap basemap to dark for night mode
   if (sky === "night") {
-    map.setStyle("https://tiles.openfreemap.org/styles/dark-matter");
+    map.setStyle("https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json");
   } else if (sky === "dusk") {
     map.setStyle("https://tiles.openfreemap.org/styles/positron");
   } else {
@@ -401,11 +359,12 @@ function applyAtmosphere(sky) {
 
 // ── RE-ADD LAYERS AFTER STYLE SWAP ───────────────────────────
 map.on("styledata", () => {
-  if (!map.isStyleLoaded()) return;
+  // if (!map.isStyleLoaded()) return;
   setTimeout(() => {
     addBuildingLayers();
     // Re-apply current mode color
     if (map.getLayer("3d-buildings")) {
+      console.log("Re-applying building color expression for mode:", currentMode);
       map.setPaintProperty("3d-buildings", "fill-extrusion-color",
         getBuildingColorExpression(currentMode));
     }
