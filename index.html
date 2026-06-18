@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Salzburg 3D City Digital Twin — MapLibre GL JS</title>
   <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -44,6 +45,7 @@
         <button class="vm-btn active" data-mode="type">By Use Type</button>
         <button class="vm-btn" data-mode="height">By Height</button>
         <button class="vm-btn" data-mode="mono">Monochrome</button>
+         <button class="vm-btn" data-mode="poi">Points on Map</button>
       </div>
     </div>
 
@@ -72,12 +74,12 @@
       <div class="lp-title">Filter by Use Type</div>
       <div class="filter-chips" id="typeFilters">
         <button class="chip active" data-type="all">All</button>
-        <button class="chip" data-type="residential">Residential</button>
+        <!-- <button class="chip" data-type="residential">Residential</button>
         <button class="chip" data-type="commercial">Commercial</button>
         <button class="chip" data-type="industrial">Industrial</button>
         <button class="chip" data-type="public">Government</button>
         <button class="chip" data-type="school">Education</button>
-        <button class="chip" data-type="hospital">Healthcare</button>
+        <button class="chip" data-type="hospital">Healthcare</button> -->
       </div>
     </div>
 
@@ -137,6 +139,8 @@
   </div>
 
   <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+  <!-- <script src="https://unpkg.com/pmtiles@3.2.0/dist/pmtiles.js"></script> -->
   <script src="script.js"></script>
+    
 </body>
 </html>
