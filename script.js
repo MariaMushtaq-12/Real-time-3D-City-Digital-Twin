@@ -19,56 +19,56 @@
 const poiData = {
   type: "FeatureCollection",
   features: [
-    { type:"Feature", properties:{ name:"Paris Lodron University", class:"university", icon:"🎓" }, geometry:{ type:"Point", coordinates:[13.055, 47.809] } },
-    { type:"Feature", properties:{ name:"Salzburg Cathedral", class:"government", icon:"⛪" }, geometry:{ type:"Point", coordinates:[13.047, 47.799] } },
-    { type:"Feature", properties:{ name:"Hohensalzburg Fortress", class:"government", icon:"🏰" }, geometry:{ type:"Point", coordinates:[13.047, 47.795] } },
-    { type:"Feature", properties:{ name:"Mirabell Palace", class:"government", icon:"🏛" }, geometry:{ type:"Point", coordinates:[13.041, 47.805] } },
-    { type:"Feature", properties:{ name:"Salzburg Hospital", class:"hospital", icon:"🏥" }, geometry:{ type:"Point", coordinates:[13.060, 47.810] } },
-    { type:"Feature", properties:{ name:"Europark Shopping", class:"commercial", icon:"🛍" }, geometry:{ type:"Point", coordinates:[13.019, 47.804] } },
-    { type:"Feature", properties:{ name:"Mozarteum University", class:"university", icon:"🎓" }, geometry:{ type:"Point", coordinates:[13.040, 47.803] } },
-    { type:"Feature", properties:{ name:"Salzburg Main Station", class:"commercial", icon:"🚂" }, geometry:{ type:"Point", coordinates:[13.045, 47.813] } }
+    { type: "Feature", properties: { name: "Paris Lodron University", class: "university", icon: "🎓" }, geometry: { type: "Point", coordinates: [13.055, 47.809] } },
+    { type: "Feature", properties: { name: "Salzburg Cathedral", class: "government", icon: "⛪" }, geometry: { type: "Point", coordinates: [13.047, 47.799] } },
+    { type: "Feature", properties: { name: "Hohensalzburg Fortress", class: "government", icon: "🏰" }, geometry: { type: "Point", coordinates: [13.047, 47.795] } },
+    { type: "Feature", properties: { name: "Mirabell Palace", class: "government", icon: "🏛" }, geometry: { type: "Point", coordinates: [13.041, 47.805] } },
+    { type: "Feature", properties: { name: "Salzburg Hospital", class: "hospital", icon: "🏥" }, geometry: { type: "Point", coordinates: [13.060, 47.810] } },
+    { type: "Feature", properties: { name: "Europark Shopping", class: "commercial", icon: "🛍" }, geometry: { type: "Point", coordinates: [13.019, 47.804] } },
+    { type: "Feature", properties: { name: "Mozarteum University", class: "university", icon: "🎓" }, geometry: { type: "Point", coordinates: [13.040, 47.803] } },
+    { type: "Feature", properties: { name: "Salzburg Main Station", class: "commercial", icon: "🚂" }, geometry: { type: "Point", coordinates: [13.045, 47.813] } }
   ]
 };
 // ── BUILDING TYPE CONFIG ──────────────────────────────────────
 const typeConfig = {
-  residential: { color: "#4A90D9", label: "Residential",    why: "MapLibre renders thousands of residential polygons in 3D using GPU shaders. Folium cannot extrude any geometry." },
-  commercial:  { color: "#E8A838", label: "Commercial",     why: "Commercial towers use height attributes from OSM data to extrude realistically. Leaflet has no fill-extrusion layer." },
-  industrial:  { color: "#D9534F", label: "Industrial",     why: "Industrial zones span large footprints. MapLibre handles complex polygon geometry at 60fps via WebGL." },
-  public:      { color: "#5CB85C", label: "Government",     why: "Government buildings are styled distinctively using data-driven expressions — impossible in static Folium maps." },
-  school:      { color: "#9B59B6", label: "Education",      why: "MapLibre filters education buildings instantly on the GPU with zero server calls — Folium needs a full Python rerun." },
-  hospital:    { color: "#1ABC9C", label: "Healthcare",      why: "Healthcare facilities are identified and styled from OSM tags using MapLibre filter expressions at render time." },
-  other:       { color: "#95A5A6", label: "Other / Unknown", why: "Even unknown buildings are rendered in 3D — MapLibre gracefully handles missing attributes via fallback expressions." }
+  residential: { color: "#4A90D9", label: "Residential", why: "MapLibre renders thousands of residential polygons in 3D using GPU shaders. Folium cannot extrude any geometry." },
+  commercial: { color: "#E8A838", label: "Commercial", why: "Commercial towers use height attributes from OSM data to extrude realistically. Leaflet has no fill-extrusion layer." },
+  industrial: { color: "#D9534F", label: "Industrial", why: "Industrial zones span large footprints. MapLibre handles complex polygon geometry at 60fps via WebGL." },
+  public: { color: "#5CB85C", label: "Government", why: "Government buildings are styled distinctively using data-driven expressions — impossible in static Folium maps." },
+  school: { color: "#9B59B6", label: "Education", why: "MapLibre filters education buildings instantly on the GPU with zero server calls — Folium needs a full Python rerun." },
+  hospital: { color: "#1ABC9C", label: "Healthcare", why: "Healthcare facilities are identified and styled from OSM tags using MapLibre filter expressions at render time." },
+  other: { color: "#95A5A6", label: "Other / Unknown", why: "Even unknown buildings are rendered in 3D — MapLibre gracefully handles missing attributes via fallback expressions." }
 };
 
 // ── FLY-TO ZONES ─────────────────────────────────────────────
 const zones = {
-  fortress:   { center: [13.047, 47.795], zoom: 16.5, pitch: 65, bearing: 30  },
-  oldtown:    { center: [13.044, 47.799], zoom: 16,   pitch: 58, bearing: -20 },
-  university: { center: [13.055, 47.809], zoom: 16,   pitch: 50, bearing: 10  },
-  overview:   { center: [13.047, 47.800], zoom: 14,   pitch: 52, bearing: -17 }
+  fortress: { center: [13.047, 47.795], zoom: 16.5, pitch: 65, bearing: 30 },
+  oldtown: { center: [13.044, 47.799], zoom: 16, pitch: 58, bearing: -20 },
+  university: { center: [13.055, 47.809], zoom: 16, pitch: 50, bearing: 10 },
+  overview: { center: [13.047, 47.800], zoom: 14, pitch: 52, bearing: -17 }
 };
 
 // ── ATMOSPHERE PRESETS ────────────────────────────────────────
 const skyPresets = {
-  day:   { buildingBase: "#c8dce8", buildingTop: "#5a9fd4", roofHigh: "#264653", fog: false },
-  dusk:  { buildingBase: "#8B5E3C", buildingTop: "#E8A838", roofHigh: "#1a1a2e", fog: false },
+  day: { buildingBase: "#c8dce8", buildingTop: "#5a9fd4", roofHigh: "#264653", fog: false },
+  dusk: { buildingBase: "#8B5E3C", buildingTop: "#E8A838", roofHigh: "#1a1a2e", fog: false },
   night: { buildingBase: "#0a1525", buildingTop: "#1e3a5f", roofHigh: "#00CFDD", fog: false }
 };
 
-let currentSky    = "day";
-let currentMode   = "type";
+let currentSky = "day";
+let currentMode = "type";
 let currentFilter = "all";
 let buildingCount = 0;
 
 // ── MAP INIT ─────────────────────────────────────────────────
 const map = new maplibregl.Map({
-  container:  "map",
-  style:      "https://tiles.openfreemap.org/styles/bright",
-  center:     [13.047, 47.800],
-  zoom:       14.5,
-  pitch:      52,
-  bearing:    -17,
-  maxPitch:   85,
+  container: "map",
+  style: "https://tiles.openfreemap.org/styles/bright",
+  center: [13.047, 47.800],
+  zoom: 14.5,
+  pitch: 52,
+  bearing: -17,
+  maxPitch: 85,
   canvasContextAttributes: { antialias: true }
 });
 
@@ -103,15 +103,15 @@ function addBuildingLayers() {
   if (!map.getSource("ofm-tiles")) {
     map.addSource("ofm-tiles", {
       type: "vector",
-      url:  "https://tiles.openfreemap.org/planet"
+      url: "https://tiles.openfreemap.org/planet"
     });
   }
-//   if (!map.getSource("ofm-tiles")) {
-//   map.addSource("ofm-tiles", {
-//     type: "vector",
-//     url: `pmtiles://${OVERTURE_BUILDINGS_PMTILES}`
-//   });
-// }
+  //   if (!map.getSource("ofm-tiles")) {
+  //   map.addSource("ofm-tiles", {
+  //     type: "vector",
+  //     url: `pmtiles://${OVERTURE_BUILDINGS_PMTILES}`
+  //   });
+  // }
 
   // Find first symbol layer — insert 3D buildings below labels
   const layers = map.getStyle().layers;
@@ -129,97 +129,97 @@ function addBuildingLayers() {
   // ── 3D BUILDING EXTRUSION ────────────────────────────────
   if (!map.getLayer("3d-buildings")) {
     map.addLayer(
-    {
-            'id': '3d-buildings',
-            'source': 'ofm-tiles',
-            'source-layer': 'building',
-            'type': 'fill-extrusion',
-            'minzoom': 15,
-            'filter': ['!=', ['get', 'hide_3d'], true],
-        
+      {
+        'id': '3d-buildings',
+        'source': 'ofm-tiles',
+        'source-layer': 'building',
+        'type': 'fill-extrusion',
+        'minzoom': 15,
+        'filter': ['!=', ['get', 'hide_3d'], true],
 
-             paint: {
-  "fill-extrusion-color": getBuildingColorExpression("type"),
 
-  "fill-extrusion-height": [
-    "interpolate", ["linear"], ["zoom"],
-    13, 0,
-    15, ["coalesce", ["get", "render_height"], 6]
-  ],
+        paint: {
+          "fill-extrusion-color": getBuildingColorExpression("type"),
 
-  "fill-extrusion-base": [
-    "interpolate", ["linear"], ["zoom"],
-    13, 0,
-    15, ["coalesce", ["get", "render_min_height"], 0]
-  ],
+          "fill-extrusion-height": [
+            "interpolate", ["linear"], ["zoom"],
+            13, 0,
+            15, ["coalesce", ["get", "render_height"], 6]
+          ],
 
-  "fill-extrusion-opacity": 0.88
-}
-        },
-     labelLayerId);
+          "fill-extrusion-base": [
+            "interpolate", ["linear"], ["zoom"],
+            13, 0,
+            15, ["coalesce", ["get", "render_min_height"], 0]
+          ],
+
+          "fill-extrusion-opacity": 0.88
+        }
+      },
+      labelLayerId);
   }
 
   // ── BUILDING OUTLINE (2D footprint at low zoom) ───────────
   if (!map.getLayer("building-outline")) {
     map.addLayer({
-      id:             "building-outline",
-      source:         "ofm-tiles",
+      id: "building-outline",
+      source: "ofm-tiles",
       "source-layer": "building",
-      type:           "line",
-      minzoom:        13,
+      type: "line",
+      minzoom: 13,
       paint: {
-        "line-color":   "rgba(58,140,230,0.25)",
-        "line-width":   0.8,
+        "line-color": "rgba(58,140,230,0.25)",
+        "line-width": 0.8,
         "line-opacity": 0.7
       }
     }, labelLayerId);
   }
   if (!map.getSource("pois")) {
-  map.addSource("pois", { type:"geojson", data: poiData });
-}
+    map.addSource("pois", { type: "geojson", data: poiData });
+  }
 
-if (!map.getLayer("poi-circles")) {
-  map.addLayer({
-    id: "poi-circles",
-    type: "circle",
-    source: "pois",
-    layout: { visibility: "none" },
-    paint: {
-      "circle-radius": 10,
-      "circle-color": [
-        "match", ["get", "class"],
-        "university", "#9B59B6",
-        "hospital",   "#1ABC9C",
-        "government", "#5CB85C",
-        "commercial", "#E8A838",
-        "#95A5A6"
-      ],
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#ffffff",
-      "circle-opacity": 0.9
-    }
-  });
-}
-if (!map.getLayer("poi-labels")) {
-  map.addLayer({
-    id: "poi-labels",
-    type: "symbol",
-    source: "pois",
-    layout: {
-      visibility: "none",
-      "text-field": ["concat", ["get", "icon"], " ", ["get", "name"]],
-      "text-size": 11,
-      "text-offset": [0, 1.6],
-      "text-anchor": "top",
-      "text-font": ["Open Sans Bold"]
-    },
-    paint: {
-      "text-color": "#ffffff",
-      "text-halo-color": "#000000",
-      "text-halo-width": 1.5
-    }
-  });
-}
+  if (!map.getLayer("poi-circles")) {
+    map.addLayer({
+      id: "poi-circles",
+      type: "circle",
+      source: "pois",
+      layout: { visibility: "none" },
+      paint: {
+        "circle-radius": 10,
+        "circle-color": [
+          "match", ["get", "class"],
+          "university", "#9B59B6",
+          "hospital", "#1ABC9C",
+          "government", "#5CB85C",
+          "commercial", "#E8A838",
+          "#95A5A6"
+        ],
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#ffffff",
+        "circle-opacity": 0.9
+      }
+    });
+  }
+  if (!map.getLayer("poi-labels")) {
+    map.addLayer({
+      id: "poi-labels",
+      type: "symbol",
+      source: "pois",
+      layout: {
+        visibility: "none",
+        "text-field": ["concat", ["get", "icon"], " ", ["get", "name"]],
+        "text-size": 11,
+        "text-offset": [0, 1.6],
+        "text-anchor": "top",
+        "text-font": ["Open Sans Bold"]
+      },
+      paint: {
+        "text-color": "#ffffff",
+        "text-halo-color": "#000000",
+        "text-halo-width": 1.5
+      }
+    });
+  }
 }
 
 // ── DATA-DRIVEN COLOR EXPRESSIONS ────────────────────────────
@@ -230,10 +230,10 @@ function getBuildingColorExpression(mode) {
     return [
       "interpolate", ["linear"],
       ["coalesce", ["get", "render_height"], 6],
-      0,   "#d4f0f7",
-      15,  "#2A9D8F",
-      40,  "#264653",
-      80,  "#1a2a35",
+      0, "#d4f0f7",
+      15, "#2A9D8F",
+      40, "#264653",
+      80, "#1a2a35",
       120, "#0a0f1a"
     ];
   }
@@ -242,7 +242,7 @@ function getBuildingColorExpression(mode) {
     return [
       "interpolate", ["linear"],
       ["coalesce", ["get", "render_height"], 6],
-      0,  "#1e3a5f",
+      0, "#1e3a5f",
       10, "#2a5280",
       50, "#3A8CE6"
     ];
@@ -277,53 +277,53 @@ function getBuildingColorExpression(mode) {
   // ];
 
   // overture building subtype mode
-// return [
-//   "match", ["get", "subtype"],
-//   "residential",  "#4A90D9",
-//   "commercial",   "#E8A838",
-//   "industrial",   "#D9534F",
-//   "education",    "#9B59B6",
-//   "medical",      "#1ABC9C",
-//   "civic",        "#5CB85C",
-//   "#95A5A6"
-// ];
+  // return [
+  //   "match", ["get", "subtype"],
+  //   "residential",  "#4A90D9",
+  //   "commercial",   "#E8A838",
+  //   "industrial",   "#D9534F",
+  //   "education",    "#9B59B6",
+  //   "medical",      "#1ABC9C",
+  //   "civic",        "#5CB85C",
+  //   "#95A5A6"
+  // ];
 
-//   // type mode
-return [
-  "interpolate", ["linear"],
-  ["coalesce", ["get", "render_height"], 6],
-  0,   "#4A90D9",  // Residential
-  8,   "#4A90D9",
-  10,  "#E8A838",  // Commercial
-  18,  "#E8A838",
-  20,  "#D9534F",  // Industrial
-  30,  "#D9534F",
-  35,  "#5CB85C",  // Government
-  45,  "#5CB85C",
-  50,  "#9B59B6",  // Education
-  70,  "#9B59B6",
-  80,  "#1ABC9C",  // Healthcare
-  100, "#1ABC9C",
-  120, "#95A5A6"   // Other
-];
+  //   // type mode
+  return [
+    "interpolate", ["linear"],
+    ["coalesce", ["get", "render_height"], 6],
+    0, "#4A90D9",  // Residential
+    8, "#4A90D9",
+    10, "#E8A838",  // Commercial
+    18, "#E8A838",
+    20, "#D9534F",  // Industrial
+    30, "#D9534F",
+    35, "#5CB85C",  // Government
+    45, "#5CB85C",
+    50, "#9B59B6",  // Education
+    70, "#9B59B6",
+    80, "#1ABC9C",  // Healthcare
+    100, "#1ABC9C",
+    120, "#95A5A6"   // Other
+  ];
 }
 
 function getBuildingTypeLabel(props) {
   // console.log("Determining building type label for properties:", props);
   const raw = props.building_type || props.building || "other";
-  const residential = ["apartments","residential","house","detached","dormitory","terrace"];
-  const commercial  = ["commercial","retail","office","supermarket","mall","shop"];
-  const industrial  = ["industrial","warehouse","factory","storage"];
-  const govt        = ["government","civic","public","town_hall","post_office"];
-  const education   = ["school","university","college","kindergarten","library"];
-  const health      = ["hospital","clinic","pharmacy","healthcare"];
+  const residential = ["apartments", "residential", "house", "detached", "dormitory", "terrace"];
+  const commercial = ["commercial", "retail", "office", "supermarket", "mall", "shop"];
+  const industrial = ["industrial", "warehouse", "factory", "storage"];
+  const govt = ["government", "civic", "public", "town_hall", "post_office"];
+  const education = ["school", "university", "college", "kindergarten", "library"];
+  const health = ["hospital", "clinic", "pharmacy", "healthcare"];
 
   if (residential.includes(raw)) return "residential";
-  if (commercial.includes(raw))  return "commercial";
-  if (industrial.includes(raw))  return "industrial";
-  if (govt.includes(raw))        return "public";
-  if (education.includes(raw))   return "school";
-  if (health.includes(raw))      return "hospital";
+  if (commercial.includes(raw)) return "commercial";
+  if (industrial.includes(raw)) return "industrial";
+  if (govt.includes(raw)) return "public";
+  if (education.includes(raw)) return "school";
+  if (health.includes(raw)) return "hospital";
   return "other";
 }
 
@@ -343,17 +343,17 @@ function updateBuildingCount() {
 function applyViewMode(mode) {
   currentMode = mode;
 
-   const show3d  = mode !== "poi" ? "visible" : "none";
+  const show3d = mode !== "poi" ? "visible" : "none";
   const showPoi = mode === "poi" ? "visible" : "none";
 
   // if (map.getLayer("3d-buildings")) {
   //   map.setPaintProperty("3d-buildings", "fill-extrusion-color",
   //     getBuildingColorExpression(currentMode));
   // }
-  if (map.getLayer("3d-buildings"))  map.setLayoutProperty("3d-buildings",  "visibility", show3d);
+  if (map.getLayer("3d-buildings")) map.setLayoutProperty("3d-buildings", "visibility", show3d);
   if (map.getLayer("building-outline")) map.setLayoutProperty("building-outline", "visibility", show3d);
-  if (map.getLayer("poi-circles"))   map.setLayoutProperty("poi-circles",   "visibility", showPoi);
-  if (map.getLayer("poi-labels"))    map.setLayoutProperty("poi-labels",    "visibility", showPoi);
+  if (map.getLayer("poi-circles")) map.setLayoutProperty("poi-circles", "visibility", showPoi);
+  if (map.getLayer("poi-labels")) map.setLayoutProperty("poi-labels", "visibility", showPoi);
 
   if (mode !== "poi" && map.getLayer("3d-buildings")) {
     map.setPaintProperty("3d-buildings", "fill-extrusion-color",
@@ -362,7 +362,7 @@ function applyViewMode(mode) {
   document.getElementById("legendType").classList.toggle("hidden", currentMode !== "type");
   document.getElementById("legendHeight").classList.toggle("hidden", currentMode !== "height");
 }
- 
+
 document.querySelectorAll(".vm-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".vm-btn").forEach(b => b.classList.remove("active"));
@@ -385,16 +385,16 @@ document.querySelectorAll(".chip").forEach(chip => {
     } else {
       // Match OSM building tags to our categories
       const tagMap = {
-        residential: ["apartments","residential","house","detached","dormitory","terrace"],
-        commercial:  ["commercial","retail","office","supermarket","mall","shop"],
-        industrial:  ["industrial","warehouse","factory","storage"],
-        public:      ["government","civic","public","town_hall","post_office"],
-        school:      ["school","university","college","kindergarten","library"],
-        hospital:    ["hospital","clinic","pharmacy","healthcare"]
+        residential: ["apartments", "residential", "house", "detached", "dormitory", "terrace"],
+        commercial: ["commercial", "retail", "office", "supermarket", "mall", "shop"],
+        industrial: ["industrial", "warehouse", "factory", "storage"],
+        public: ["government", "civic", "public", "town_hall", "post_office"],
+        school: ["school", "university", "college", "kindergarten", "library"],
+        hospital: ["hospital", "clinic", "pharmacy", "healthcare"]
       };
       const tags = tagMap[currentFilter] || [];
       // const f = ["in", ["coalesce", ["get", "building_type"], ["get", "building"], ""], ["literal", tags]];
-     const f = ["in", ["get", "building"], ["literal", tags]];
+      const f = ["in", ["get", "building"], ["literal", tags]];
       map.setFilter("3d-buildings", f);
       map.setFilter("building-outline", f);
     }
@@ -433,12 +433,12 @@ document.querySelectorAll(".fly-btn").forEach(btn => {
     const z = zones[btn.dataset.zone];
     if (!z) return;
     map.flyTo({
-      center:   z.center,
-      zoom:     z.zoom,
-      pitch:    z.pitch,
-      bearing:  z.bearing,
-      speed:    0.75,
-      curve:    1.4,
+      center: z.center,
+      zoom: z.zoom,
+      pitch: z.pitch,
+      bearing: z.bearing,
+      speed: 0.75,
+      curve: 1.4,
       essential: true
     });
   });
@@ -462,7 +462,7 @@ function applyAtmosphere(sky) {
   // Swap basemap to dark for night mode
   if (sky === "night") {
     map.setStyle("https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json");
-//  map.setStyle("https://tiles.openfreemap.org/styles/dark");
+    //  map.setStyle("https://tiles.openfreemap.org/styles/dark");
   } else if (sky === "dusk") {
     map.setStyle("https://tiles.openfreemap.org/styles/positron");
   } else {
@@ -492,31 +492,31 @@ map.on("click", "3d-buildings", (e) => {
   // console.log("ALL PROPS:", JSON.stringify(e.features[0].properties));
   if (!e.features || !e.features.length) return;
 
-  const props  = e.features[0].properties;
+  const props = e.features[0].properties;
   const height = Math.round(props.render_height || props.height || 6);
   const floors = Math.round(height / 3.2) || 1;
   const typeKey = getBuildingTypeLabel(props);
-  const cfg     = typeConfig[typeKey] || typeConfig.other;
-  const barPct  = Math.min(100, Math.round((height / 150) * 100));
+  const cfg = typeConfig[typeKey] || typeConfig.other;
+  const barPct = Math.min(100, Math.round((height / 150) * 100));
 
   const name = props.name || props.addr_street ||
-               cfg.label + " Building";
+    cfg.label + " Building";
 
   document.getElementById("inspName").textContent = name;
 
   const badge = document.getElementById("inspBadge");
   badge.textContent = cfg.label;
   badge.style.background = cfg.color + "22";
-  badge.style.color       = cfg.color;
-  badge.style.border      = `1px solid ${cfg.color}55`;
+  badge.style.color = cfg.color;
+  badge.style.border = `1px solid ${cfg.color}55`;
 
   const rows = [
-    ["Use Type",       cfg.label],
-    ["Height",         height + " m"],
-    ["Est. Floors",    floors],
-    ["Footprint",      props.area ? Math.round(props.area) + " m²" : "N/A"],
-    ["OSM Tag",        props.building || props.building_type || "building"],
-    ["Coordinates",    `${e.lngLat.lat.toFixed(5)}, ${e.lngLat.lng.toFixed(5)}`]
+    ["Use Type", cfg.label],
+    ["Height", height + " m"],
+    ["Est. Floors", floors],
+    ["Footprint", props.area ? Math.round(props.area) + " m²" : "N/A"],
+    ["OSM Tag", props.building || props.building_type || "building"],
+    ["Coordinates", `${e.lngLat.lat.toFixed(5)}, ${e.lngLat.lng.toFixed(5)}`]
   ];
 
   document.getElementById("inspRows").innerHTML = rows.map(([k, v]) =>
